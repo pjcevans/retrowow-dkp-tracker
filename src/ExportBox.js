@@ -1,13 +1,14 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import DkpMetadata from './DkpMetadata';
-import ExportContent from './ExportContent';
+import ExportList from './ExportList';
+import ExportForm from './ExportForm';
 import style from './style';
 
 class ExportBox extends Component {
   constructor(props) {
     super(props);
-    this.state = { data: [], focus: "" };
+    this.state = { data: [] };
     this.loadExportsFromServer = this.loadExportsFromServer.bind(this);
     this.handleExportSubmit = this.handleExportSubmit.bind(this);
   }
@@ -42,9 +43,8 @@ class ExportBox extends Component {
       <div style={ style.commentBox }>
         <h2>Certus Excessum DKP Tracker</h2>
         <DkpMetadata data={ this.state.data } />
-        <ExportContent data={ this.state.data }
-                       onExportSubmit={ this.handleExportSubmit }
-                       focus={ this.state.focus }/>
+        <ExportForm onExportSubmit={ this.handleExportSubmit }/>
+        <ExportList data={ this.state.data }/>
       </div>
     )
   }

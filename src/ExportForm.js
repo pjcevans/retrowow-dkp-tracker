@@ -20,6 +20,7 @@ class ExportForm extends Component {
   handleSubmit(e) {
     // Prevent normal submit as post is handled by axios
     e.preventDefault();
+    let exportArray = []
 
     // Values for submission are taken from local state which is used to
     // set form fields
@@ -35,10 +36,18 @@ class ExportForm extends Component {
     let filteredString = shortenedString.replace(/=/g, ":")
     filteredString = filteredString.replace(/[\[\]']+/g,'')
     filteredString = filteredString.replace(/,(?=[^,]*$)/, '')
-
-
+    console.log(filteredString)
+    let parsedData = JSON.parse(filteredString);
+    console.log(parsedData)
+    for (var key in parsedData) {
+      let exportItem = {};
+      exportItem.name = key;
+      exportItem.dkp = parsedData[key];
+      exportArray.push(exportItem);
+    }
+    console.log(exportArray)
     // Submit the export and clear current state
-    this.props.onExportSubmit({ date: date, dkp: filteredString });
+    this.props.onExportSubmit({ date: date, dkp: filteredString, dkparray: exportArray });
     this.setState({ date: '', dkp: '' });
   }
   render() {

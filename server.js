@@ -57,7 +57,8 @@ app.post('/api/exports', function(req, res) {
   //body parser lets us use the req.body
   Export.findOneAndUpdate(
     { date: req.body.date },
-    { dkpdata: req.body.dkp },
+    { dkpdata: req.body.dkp,
+      dkparray: req.body.dkparray },
     // { $push: {dkpdata: req.body.dkp} },
     { safe: true, upsert: true },
     function(err, model) {

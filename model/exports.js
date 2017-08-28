@@ -7,7 +7,11 @@ var Schema = mongoose.Schema;
 //the shape of your database entries.
 var ExportsSchema = new Schema({
     date: String,
-    dkpdata: String
+    dkpdata: String,
+    dkparray: [{
+      name : String,
+      dkp : String
+     }]
 });
 
 //export our module to use in server.js

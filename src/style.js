@@ -65,6 +65,18 @@ const style = {
     paddingRight:'15px',
     fontSize:'.7rem',
     color:'red'
+  },
+  exportFormList: {
+    width:'750px',
+    listStyleType:'none',
+    listStylePosition:'outside',
+    margin:'0px',
+    padding:'0px'
+  },
+  exportFormListItem: {
+    padding:'12px',
+    borderBottom:'1px solid #eee',
+    position:'relative',
   }
 }
 

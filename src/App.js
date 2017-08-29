@@ -5,7 +5,7 @@ import ExportList from './ExportList';
 import ExportForm from './ExportForm';
 import style from './style';
 
-class ExportBox extends Component {
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = { data: [] };
@@ -50,4 +50,4 @@ class ExportBox extends Component {
   }
 }
 
-export default ExportBox;
+export default App;

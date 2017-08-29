@@ -4,15 +4,23 @@ import style from './style';
 class ExportForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { date: '', dkp: '' };
+    this.state = { date: '', dkp: '', guild: 'Certus Excessum'  };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleDkpChange = this.handleDkpChange.bind(this);
+    this.handleGuildChange = this.handleGuildChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
 
+  fillDate() {
+    this.setState({ date: Date.now().toString() });
+  }
+
   handleDateChange(e) {
     this.setState({ date: e.target.value });
+  }
+  handleGuildChange(e) {
+    this.setState({ guild: e.target.value });
   }
   handleDkpChange(e) {
     this.setState({ dkp: e.target.value });
@@ -29,47 +37,64 @@ class ExportForm extends Component {
     if (!date || !dkp) {
       return;
     }
-
+    console.log(this.state.guild)
     // Cleanse dataset to remove silly LUA boilerplate
     let stringStart = dkp.indexOf("{")
     let shortenedString = dkp.substring(stringStart)
     let filteredString = shortenedString.replace(/=/g, ":")
     filteredString = filteredString.replace(/[\[\]']+/g,'')
     filteredString = filteredString.replace(/,(?=[^,]*$)/, '')
-    console.log(filteredString)
+    // Also export a set of properly formatted/ modelled JSON in addition to long string export
     let parsedData = JSON.parse(filteredString);
-    console.log(parsedData)
     for (var key in parsedData) {
       let exportItem = {};
       exportItem.name = key;
       exportItem.dkp = parsedData[key];
       exportArray.push(exportItem);
     }
-    console.log(exportArray)
     // Submit the export and clear current state
-    this.props.onExportSubmit({ date: date, dkp: filteredString, dkparray: exportArray });
+    this.props.onExportSubmit({ date: date, guild: this.state.guild, dkp: filteredString, dkparray: exportArray });
     this.setState({ date: '', dkp: '' });
   }
   render() {
     return (
       <form style={ style.commentForm } onSubmit={ this.handleSubmit }>
-
-        <input
-          type='text'
-          placeholder='The date...'
-          style={ style.commentFormText}
-          value={ this.state.date }
-          onChange={ this.handleDateChange } />
-        <input
-          type='text'
-          placeholder='The dkp value...'
-          style={ style.commentFormText}
-          value={ this.state.dkp }
-          onChange={ this.handleDkpChange } />
-        <input
-          type='submit'
-          style={ style.commentFormPost }
-          value='Post' />
+        <ul style={ style.exportFormList }>
+          <li style={ style.exportFormListItem }>
+            <button style={ style.commentFormPost }
+                    onClick={ () => this.fillDate() }>Current date</button>
+            <input
+              type='text'
+              placeholder='The date in milis...'
+              style={ style.commentFormText}
+              value={ this.state.date }
+              onChange={ this.handleDateChange } />
+            </li>
+          <li style={ style.exportFormListItem }>
+            <label for="dkp">Addon output: </label>
+            <input
+              name='dkp'
+              type='text'
+              placeholder='The output of the export addon...'
+              style={ style.commentFormText}
+              value={ this.state.dkp }
+              onChange={ this.handleDkpChange } />
+          </li>
+          <li style={ style.exportFormListItem }>
+            <label for="guild">Guild: </label>
+            <select name="guild" onChange={ this.handleGuildChange } >
+              <option value="Certus Excessum" selected="selected">Certus Excessum</option>
+              <option value="Goldshire Golfclub">Goldshire Golfclub</option>
+              <option value="De Profundis">De Profundis</option>
+            </select>
+          </li>
+          <li style={ style.exportFormListItem }>
+              <input
+                type='submit'
+                style={ style.commentFormPost }
+                value='Submit' />
+          </li>
+        </ul>
       </form>
     )
   }

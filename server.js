@@ -58,7 +58,8 @@ app.post('/api/exports', function(req, res) {
   Export.findOneAndUpdate(
     { date: req.body.date },
     { dkpdata: req.body.dkp,
-      dkparray: req.body.dkparray },
+      dkparray: req.body.dkparray,
+      guild: req.body.guild },
     // { $push: {dkpdata: req.body.dkp} },
     { safe: true, upsert: true },
     function(err, model) {

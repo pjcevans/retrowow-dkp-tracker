@@ -12,7 +12,10 @@
     "nodemon": "^1.11.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
-    "recharts": "^1.0.0-alpha.2"
+    "react-redux": "^5.0.6",
+    "recharts": "^1.0.0-alpha.2",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0"
   },
   "devDependencies": {
     "react-scripts": "1.0.10"

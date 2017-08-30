@@ -62,7 +62,8 @@ class ExportForm extends Component {
         <ul style={ style.exportFormList }>
           <li style={ style.exportFormListItem }>
             <button style={ style.commentFormPost }
-                    onClick={ () => this.fillDate() }>Current date</button>
+                    onClick={ () => this.fillDate() }
+                    type="button">Current date</button>
             <input
               type='text'
               placeholder='The date in milis...'

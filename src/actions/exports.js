@@ -41,7 +41,7 @@ export function exportsPostData(url, dkpExport) {
   return (dispatch) => {
     axios.post(url, dkpExport)
       .catch(err => {
-        console.error(err);
+        console.log(err);
       });
   }
 }

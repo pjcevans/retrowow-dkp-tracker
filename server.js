@@ -55,16 +55,22 @@ app.get('/api/exports', function(req, res) {
   //post new comment to the database
 app.post('/api/exports', function(req, res) {
   //body parser lets us use the req.body
-  Export.findOneAndUpdate(
-    { date: req.body.date },
-    { dkpdata: req.body.dkp,
-      dkparray: req.body.dkparray,
-      guild: req.body.guild },
-    // { $push: {dkpdata: req.body.dkp} },
-    { safe: true, upsert: true },
-    function(err, model) {
-        console.log(err);
-    });
+  console.log("env password is: - " + process.env.VG_DKP_CE)
+  console.log("password entered is: - " + req.body.password)
+  if (req.body.password === process.env.VG_DKP_CE && req.body.guild === "Certus Excessum" ||
+      req.body.password === process.env.VG_DKP_GGC && req.body.guild === "Goldshire Golfclub" ||
+      req.body.password === process.env.VG_DKP_DP && req.body.guild === "De Profundis"  ) {
+    Export.findOneAndUpdate(
+      { date: req.body.date },
+      { dkparray: req.body.dkparray,
+        guild: req.body.guild },
+      // { $push: {dkpdata: req.body.dkp} },
+      { safe: true, upsert: true },
+      function(err, model) {
+          console.log(err);
+      });
+  }
+
 });
 
 

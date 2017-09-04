@@ -30,11 +30,11 @@ class App extends Component {
     return (
       <Router>
         <div style={ style.commentBox }>
-          <h2>Certus Excessum DKP Tracker</h2>
+          <h2>VanillaGaming DKP Tracker</h2>
            <ul>
-             <li><Link to="/ce">Home</Link></li>
-             <li><Link to="/ggc">Upload</Link></li>
-             <li><Link to="/dp">Upload</Link></li>
+             <li><Link to="/ce">Certus Excessum</Link></li>
+             <li><Link to="/ggc">Goldshire Golfclub</Link></li>
+             <li><Link to="/dp">De Profundis</Link></li>
            </ul>
 
            <hr/>

@@ -11,20 +11,25 @@ class DkpMetadata extends Component {
         let reversedData = this.props.data;
         reversedData.reverse();
 
-        let dkpExport = JSON.parse(reversedData[0].dkpdata)
+        let latestExport = reversedData[0];
         let dkpValues = []
-        for(let item in dkpExport) {
-          dkpValues.push(parseInt(dkpExport[item]))
-        }
+        // for(let item in dkpExport) {
+        //   dkpValues.push(parseInt(dkpExport[item]))
+        // }
+        console.log(latestExport)
 
         //remove all zero value dkp entries
-        dkpValues = dkpValues.filter(item => {
-          return item !== 0;
+        dkpValues = latestExport.dkparray.filter(item => {
+          return parseInt(item.dkp) !== 0;
         })
 
-        var totalDkp = dkpValues.reduce((sum, value) => {
-          return sum + value;
-        })
+        console.log(dkpValues)
+
+        var totalDkp = 0;
+
+        dkpValues.forEach((item) => {
+          totalDkp += parseInt(item.dkp);
+        });
 
         if (dkpValues.length) {
           dkpLength = dkpValues.length;

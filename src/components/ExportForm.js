@@ -4,10 +4,11 @@ import style from './style';
 class ExportForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { date: '', dkp: '', guild: 'Certus Excessum'  };
+    this.state = { date: '', dkp: '', guild: 'Certus Excessum', password: ''  };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleDkpChange = this.handleDkpChange.bind(this);
     this.handleGuildChange = this.handleGuildChange.bind(this);
+    this.handlePasswordChange = this.handlePasswordChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -15,7 +16,9 @@ class ExportForm extends Component {
   fillDate() {
     this.setState({ date: Date.now().toString() });
   }
-
+  handlePasswordChange(e) {
+    this.setState({ password: e.target.value });
+  }
   handleDateChange(e) {
     this.setState({ date: e.target.value });
   }
@@ -44,7 +47,6 @@ class ExportForm extends Component {
     let filteredString = shortenedString.replace(/=/g, ":")
     filteredString = filteredString.replace(/[\[\]']+/g,'')
     filteredString = filteredString.replace(/,(?=[^,]*$)/, '')
-    // Also export a set of properly formatted/ modelled JSON in addition to long string export
     let parsedData = JSON.parse(filteredString);
     for (var key in parsedData) {
       let exportItem = {};
@@ -53,8 +55,8 @@ class ExportForm extends Component {
       exportArray.push(exportItem);
     }
     // Submit the export and clear current state
-    this.props.onExportSubmit('http://localhost:3001/api/exports', { date: date, guild: this.state.guild, dkp: filteredString, dkparray: exportArray });
-    this.setState({ date: '', dkp: '' });
+    this.props.onExportSubmit('http://localhost:3001/api/exports', { date: date, guild: this.state.guild, dkparray: exportArray, password: this.state.password });
+    this.setState({ date: '', dkp: '', password: '' });
   }
   render() {
     return (
@@ -88,6 +90,16 @@ class ExportForm extends Component {
               <option value="Goldshire Golfclub">Goldshire Golfclub</option>
               <option value="De Profundis">De Profundis</option>
             </select>
+          </li>
+          <li style={ style.exportFormListItem }>
+            <label for="password">Password: </label>
+            <input
+              name='password'
+              type='text'
+              placeholder='Enter super secure password...'
+              style={ style.commentFormText}
+              value={ this.state.password }
+              onChange={ this.handlePasswordChange } />
           </li>
           <li style={ style.exportFormListItem }>
               <input

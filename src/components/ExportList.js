@@ -19,7 +19,7 @@ class ExportList extends Component {
     }, () => {
       // Call function to update output based on search term
       // this.updateGallery();
-      console.log(this.state.searchTerm)
+      // console.log(this.state.searchTerm)
     });
   }
 
@@ -29,34 +29,41 @@ class ExportList extends Component {
     // Given a search term, build a dataset for just that user
     // Note: this should probably actually be handled with a db query
     // rather than pulling in the whole dataset and grokking it in the browser
-    let reversedData = this.props.data.reverse();
-    reversedData.forEach(item => {
-      let exportTableRow = {};
-      let parsedData = JSON.parse(item.dkpdata);
-      if (parsedData[this.state.searchTerm]) {
-        let timeUTC = new Date(parseInt(item.date)).toUTCString().toString();
-        exportTableRow.date = timeUTC;
-        exportTableRow.day = timeUTC.substring(0,3);
-        exportTableRow.dkp = parseInt(parsedData[this.state.searchTerm]);
-        exportTableRow.change = parseInt(exportTableRow.dkp) - lastDKPValue;
-        lastDKPValue = exportTableRow.dkp
-        exportTableData.push(exportTableRow)
-      }
-    })
+    if (this.props.data.exports) {
+      let reversedData = this.props.data.exports.reverse();
+      reversedData.forEach(item => {
+        let exportTableRow = {};
+        // let parsedData = JSON.parse(item.dkpdata);
+        let itemData = item.dkparray;
 
-    if (exportTableData.length > 0) {
-      // Build table items for each row of data
-      var exportTableRows = exportTableData.map(item => {
-        return (
-          <tr><td>{item.date}</td><td>{item.dkp}</td><td>{item.change}</td></tr>
-        )
+        // find the currently searched player's details within this export
+        let match = itemData.find((item) => { return item.name === this.state.searchTerm })
+
+        if (match) {
+          let timeUTC = new Date(parseInt(item.date)).toUTCString().toString();
+          exportTableRow.date = timeUTC;
+          exportTableRow.day = timeUTC.substring(0,3);
+          exportTableRow.dkp = parseInt(match.dkp);
+          exportTableRow.change = parseInt(exportTableRow.dkp) - lastDKPValue;
+          lastDKPValue = exportTableRow.dkp
+          exportTableData.push(exportTableRow)
+        }
       })
 
-      // Add header row
-      exportTableRows.push(<tr><th>Date</th><th>Dkp</th><th>Change</th></tr>)
+      if (exportTableData.length > 0) {
+        // Build table items for each row of data
+        var exportTableRows = exportTableData.map(item => {
+          return (
+            <tr><td>{item.date}</td><td>{item.dkp}</td><td>{item.change}</td></tr>
+          )
+        })
 
-      // Display most recent first
-      exportTableRows.reverse();
+        // Add header row
+        exportTableRows.push(<tr><th>Date</th><th>Dkp</th><th>Change</th></tr>)
+
+        // Display most recent first
+        exportTableRows.reverse();
+      }
     }
 
 

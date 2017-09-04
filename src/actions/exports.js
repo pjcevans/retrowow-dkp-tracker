@@ -1,9 +1,10 @@
 import axios from 'axios';
 
-export function exportsHasErrored(bool) {
+export function exportsHasErrored(bool, error) {
     return {
         type: 'EXPORTS_HAS_ERRORED',
-        hasErrored: bool
+        hasErrored: bool,
+        error
     };
 }
 
@@ -32,7 +33,7 @@ export function exportsGetData(url) {
             })
             // .then((response) => response.json())
             .then((exports) => dispatch(exportsGetDataSuccess(exports)))
-            .catch(() => dispatch(exportsHasErrored(true)));
+            .catch((error) => dispatch(exportsHasErrored(true, error.message)));
     };
 }
 

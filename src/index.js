@@ -1,10 +1,14 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App'
+import App from './components/App'
+import { Provider } from 'react-redux';
+import configureStore from './store/configureStore';
+
+const store = configureStore();
 
 ReactDOM.render(
-  <App
-    url='http://localhost:3001/api/exports'
-    pollInterval={2000} />,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root')
 );

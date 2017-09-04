@@ -1,4 +1,9 @@
 import React, { Component, PropTypes } from 'react';
+import {
+  BrowserRouter as Router,
+  Route,
+  Link
+} from 'react-router-dom'
 import DkpMetadata from './DkpMetadata';
 import ExportList from './ExportList';
 import ExportForm from './ExportForm';
@@ -23,12 +28,28 @@ class App extends Component {
 
 
     return (
-      <div style={ style.commentBox }>
-        <h2>Certus Excessum DKP Tracker</h2>
-        <DkpMetadata data={ this.props.exports } />
-        <ExportForm onExportSubmit={ this.props.postExport }/>
-        <ExportList data={ this.props.exports }/>
-      </div>
+      <Router>
+        <div style={ style.commentBox }>
+          <h2>Certus Excessum DKP Tracker</h2>
+           <ul>
+             <li><Link to="/ce">Home</Link></li>
+             <li><Link to="/ggc">Upload</Link></li>
+             <li><Link to="/dp">Upload</Link></li>
+           </ul>
+
+           <hr/>
+
+          <Route exact path="/ce" render={(props) => (<div><DkpMetadata data={ this.props.exports.ce }/>
+                                                    <ExportList data={ this.props.exports.ce }/></div>)} />
+          <Route exact path="/ggc" render={(props) => (<div><DkpMetadata data={ this.props.exports.ggc }/>
+                                                    <ExportList data={ this.props.exports.ggc }/></div>)} />
+          <Route exact path="/dp" render={(props) => (<div><DkpMetadata data={ this.props.exports.dp }/>
+                                                    <ExportList data={ this.props.exports.dp }/></div>)} />
+          <Route path="/upload" render={(props) => (<ExportForm onExportSubmit={ this.props.postExport }/>)} />
+
+        </div>
+      </Router>
+
     )
   }
 }
@@ -58,3 +79,11 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
+
+
+
+        //
+        //
+        // <DkpMetadata data={ this.props.exports } />
+        // <ExportForm onExportSubmit={ this.props.postExport }/>
+        // <ExportList data={ this.props.exports }/>

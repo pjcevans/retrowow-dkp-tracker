@@ -29,8 +29,8 @@ class ExportList extends Component {
     // Given a search term, build a dataset for just that user
     // Note: this should probably actually be handled with a db query
     // rather than pulling in the whole dataset and grokking it in the browser
-    if (this.props.data.exports) {
-      let reversedData = this.props.data.exports.reverse();
+    if (this.props.data) {
+      let reversedData = this.props.data.reverse();
       reversedData.forEach(item => {
         let exportTableRow = {};
         // let parsedData = JSON.parse(item.dkpdata);

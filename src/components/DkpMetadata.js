@@ -4,11 +4,11 @@ import style from './style';
 class DkpMetadata extends Component {
   render() {
 
-    if (this.props.data.exports) {
-      if (this.props.data.exports[0]) {
+    if (this.props.data) {
+      if (this.props.data[0]) {
         var dkpLength = 0;
         var averageDkp = 0;
-        let reversedData = this.props.data.exports;
+        let reversedData = this.props.data;
         reversedData.reverse();
 
         let dkpExport = JSON.parse(reversedData[0].dkpdata)

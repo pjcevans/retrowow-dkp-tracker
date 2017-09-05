@@ -40,9 +40,14 @@ app.use(function(req, res, next) {
   next();
 });
 
+// Error handling middleware
+
+// app.use(function(err, req, res, next) {
+//   // console.error(err.stack)
+//   res.status(500).send('Something broke!')
+// });
+
 //now  we can set the route path & initialize the API
-
-
 app.get('/api/exports', function(req, res) {
     //looks at our Export Schema
     Export.find(function(err, people) {
@@ -53,10 +58,8 @@ app.get('/api/exports', function(req, res) {
     }).sort('date');
   })
   //post new comment to the database
-app.post('/api/exports', function(req, res) {
+app.post('/api/exports', function(req, res, next) {
   //body parser lets us use the req.body
-  console.log("env password is: - " + process.env.VG_DKP_CE)
-  console.log("password entered is: - " + req.body.password)
   if (req.body.password === process.env.VG_DKP_CE && req.body.guild === "Certus Excessum" ||
       req.body.password === process.env.VG_DKP_GGC && req.body.guild === "Goldshire Golfclub" ||
       req.body.password === process.env.VG_DKP_DP && req.body.guild === "De Profundis"  ) {
@@ -69,11 +72,22 @@ app.post('/api/exports', function(req, res) {
       function(err, model) {
           console.log(err);
       });
+      res.send("Success");
+  } else {
+    res.statusMessage = "Current password does not match";
+    res.status(400).end();
+    // res.status(501).send('Current password does not match');
+    // let err = new Error("yikes");
+    // next(err);
   }
 
 });
 
-
+// custom error definitions
+function UserException(message) {
+   this.message = message;
+   this.name = 'UserException';
+}
 
 //starts the server and listens for requests
 app.listen(port, function() {

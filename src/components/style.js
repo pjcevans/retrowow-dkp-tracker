@@ -77,6 +77,12 @@ const style = {
     padding:'12px',
     borderBottom:'1px solid #eee',
     position:'relative',
+  },
+  errorMessage: {
+    color:'red'
+  },
+  successMessage: {
+    color:'green'
   }
 }
 

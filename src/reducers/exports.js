@@ -9,6 +9,29 @@ export function exportsHasErrored(state = false, action) {
   }
 }
 
+export function uploadsHasErrored(state = false, action) {
+  switch (action.type) {
+    case 'UPLOADS_HAS_ERRORED':
+      return action.hasErrored;
+    case 'UPLOADS_CLEAR_ERRORED':
+      return action.hasErrored;
+    default:
+      return state;
+  }
+}
+
+export function uploadsHasSucceeded(state = false, action) {
+  switch (action.type) {
+    case 'UPLOADS_HAS_SUCCEEDED':
+      return action.hasSucceeded;
+    case 'UPLOADS_CLEAR_SUCCEEDED':
+      return action.hasSucceeded;
+    default:
+      return state;
+  }
+}
+
+
 export function exportsIsLoading(state = false, action) {
   switch (action.type) {
     case 'EXPORTS_IS_LOADING':

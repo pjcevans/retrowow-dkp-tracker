@@ -9,7 +9,7 @@ import ExportList from './ExportList';
 import ExportForm from './ExportForm';
 import style from './style';
 import { connect } from 'react-redux';
-import { exportsGetData, exportsPostData } from '../actions/exports';
+import { exportsGetData, exportsPostData, uploadsClearErrored, uploadsHasErrored, uploadsClearSucceeded, uploadsHasSucceeded } from '../actions/exports';
 
 class App extends Component {
   constructor(props) {
@@ -45,7 +45,13 @@ class App extends Component {
                                                     <ExportList data={ this.props.exports.ggc }/></div>)} />
           <Route exact path="/dp" render={(props) => (<div><DkpMetadata data={ this.props.exports.dp }/>
                                                     <ExportList data={ this.props.exports.dp }/></div>)} />
-          <Route path="/upload" render={(props) => (<ExportForm onExportSubmit={ this.props.postExport }/>)} />
+          <Route path="/upload" render={(props) => (<ExportForm onExportSubmit={ this.props.postExport }
+                                                                uploadsClearErrored={ this.props.uploadsClearErrored }
+                                                                uploadsThrowErrored={ this.props.uploadsThrowErrored }
+                                                                uploadsHasErrored= {this.props.uploadsHasErrored }
+                                                                uploadsClearSucceeded={ this.props.uploadsClearSucceeded }
+                                                                uploadsThrowSucceeded={ this.props.uploadsThrowSucceeded }
+                                                                uploadsHasSucceeded= {this.props.uploadsHasSucceeded } />)} />
 
         </div>
       </Router>
@@ -57,24 +63,35 @@ class App extends Component {
 App.propTypes = {
   getExports: PropTypes.func.isRequired,
   postExport: PropTypes.func.isRequired,
+  uploadsClearErrored: PropTypes.func.isRequired,
+  uploadsThrowErrored: PropTypes.func.isRequired,
+  uploadsClearSucceeded: PropTypes.func.isRequired,
+  uploadsThrowSucceeded: PropTypes.func.isRequired,
   exports: PropTypes.object.isRequired,
-  hasErrored: PropTypes.bool.isRequired,
-  isLoading: PropTypes.bool.isRequired
+  exportsHasErrored: PropTypes.bool.isRequired,
+  exportsIsLoading: PropTypes.bool.isRequired,
+  uploadsHasErrored: PropTypes.bool.isRequired,
+  uploadsHasSucceeded: PropTypes.bool.isRequired
 };
 
 const mapStateToProps = (state) => {
     return {
         exports: state.exports, // passing exports.exports here should work fine?
-        hasErrored: state.itemsHasErrored,
-        isLoading: state.itemsIsLoading
-
+        exportsHasErrored: state.exportsHasErrored,
+        exportsIsLoading: state.exportsIsLoading,
+        uploadsHasErrored: state.uploadsHasErrored,
+        uploadsHasSucceeded: state.uploadsHasSucceeded
     };
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
         getExports: (url) => dispatch(exportsGetData(url)),
-        postExport: (url, data) => dispatch(exportsPostData(url, data))
+        postExport: (url, data) => dispatch(exportsPostData(url, data)),
+        uploadsClearErrored: (bool) => dispatch(uploadsClearErrored(bool)),
+        uploadsThrowErrored: (bool) => dispatch(uploadsHasErrored(bool)),
+        uploadsClearSucceeded: (bool) => dispatch(uploadsClearSucceeded(bool)),
+        uploadsThrowSucceeded: (bool) => dispatch(uploadsHasSucceeded(bool))
     };
 };
 

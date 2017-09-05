@@ -4,7 +4,7 @@ import style from './style';
 class ExportForm extends Component {
   constructor(props) {
     super(props);
-    this.state = { date: '', dkp: '', guild: 'Certus Excessum', password: ''  };
+    this.state = { date: '', dkp: '', guild: 'Certus Excessum', password: '' };
     this.handleDateChange = this.handleDateChange.bind(this);
     this.handleDkpChange = this.handleDkpChange.bind(this);
     this.handleGuildChange = this.handleGuildChange.bind(this);
@@ -15,18 +15,28 @@ class ExportForm extends Component {
 
   fillDate() {
     this.setState({ date: Date.now().toString() });
+    this.props.uploadsClearErrored(false);
+    this.props.uploadsClearSucceeded(false);
   }
   handlePasswordChange(e) {
     this.setState({ password: e.target.value });
+    this.props.uploadsClearErrored(false);
+    this.props.uploadsClearSucceeded(false);
   }
   handleDateChange(e) {
     this.setState({ date: e.target.value });
+    this.props.uploadsClearErrored(false);
+    this.props.uploadsClearSucceeded(false);
   }
   handleGuildChange(e) {
     this.setState({ guild: e.target.value });
+    this.props.uploadsClearErrored(false);
+    this.props.uploadsClearSucceeded(false);
   }
   handleDkpChange(e) {
     this.setState({ dkp: e.target.value });
+    this.props.uploadsClearErrored(false);
+    this.props.uploadsClearSucceeded(false);
   }
   handleSubmit(e) {
     // Prevent normal submit as post is handled by axios
@@ -40,27 +50,51 @@ class ExportForm extends Component {
     if (!date || !dkp) {
       return;
     }
-    console.log(this.state.guild)
     // Cleanse dataset to remove silly LUA boilerplate
     let stringStart = dkp.indexOf("{")
     let shortenedString = dkp.substring(stringStart)
     let filteredString = shortenedString.replace(/=/g, ":")
     filteredString = filteredString.replace(/[\[\]']+/g,'')
     filteredString = filteredString.replace(/,(?=[^,]*$)/, '')
-    let parsedData = JSON.parse(filteredString);
-    for (var key in parsedData) {
-      let exportItem = {};
-      exportItem.name = key;
-      exportItem.dkp = parsedData[key];
-      exportArray.push(exportItem);
+    try {
+      let parsedData = JSON.parse(filteredString);
+      for (var key in parsedData) {
+        let exportItem = {};
+        exportItem.name = key;
+        exportItem.dkp = parsedData[key];
+        exportArray.push(exportItem);
+      }
+      // Submit the export and clear current state
+      this.props.onExportSubmit('http://localhost:3001/api/exports', { date: date, guild: this.state.guild, dkparray: exportArray, password: this.state.password });
+      this.setState({ date: '', dkp: '', password: '' });
+    } catch (error) {
+      this.props.uploadsThrowErrored(true)
     }
-    // Submit the export and clear current state
-    this.props.onExportSubmit('http://localhost:3001/api/exports', { date: date, guild: this.state.guild, dkparray: exportArray, password: this.state.password });
-    this.setState({ date: '', dkp: '', password: '' });
+
   }
   render() {
+    const uploadsHasErrored = this.props.uploadsHasErrored;
+    const uploadsHasSucceeded = this.props.uploadsHasSucceeded;
+
     return (
+
       <form style={ style.commentForm } onSubmit={ this.handleSubmit }>
+
+        {uploadsHasErrored
+          ?  <div>
+               <h2 style={ style.errorMessage } >Upload failed</h2>
+               <p>Did you enter the correct guild + password combination?</p>
+               <p>Was the data correctly formatted?</p>
+             </div>
+          : null}
+
+          {uploadsHasSucceeded
+            ?  <div>
+                 <h2 style={ style.successMessage } >Upload Succeeded</h2>
+                 <p>gj!</p>
+               </div>
+            : null}
+
         <ul style={ style.exportFormList }>
           <li style={ style.exportFormListItem }>
             <button style={ style.commentFormPost }

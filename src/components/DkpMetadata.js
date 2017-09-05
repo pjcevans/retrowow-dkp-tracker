@@ -13,17 +13,11 @@ class DkpMetadata extends Component {
 
         let latestExport = reversedData[0];
         let dkpValues = []
-        // for(let item in dkpExport) {
-        //   dkpValues.push(parseInt(dkpExport[item]))
-        // }
-        console.log(latestExport)
 
         //remove all zero value dkp entries
         dkpValues = latestExport.dkparray.filter(item => {
           return parseInt(item.dkp) !== 0;
         })
-
-        console.log(dkpValues)
 
         var totalDkp = 0;
 
@@ -35,9 +29,6 @@ class DkpMetadata extends Component {
           dkpLength = dkpValues.length;
           averageDkp = Math.round(totalDkp / dkpLength);
         }
-
-
-        // console.log(dkpValues.length)
 
       }
     }

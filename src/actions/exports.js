@@ -8,8 +8,6 @@ export function exportsHasErrored(bool, error) {
     };
 }
 
-// Currently returning the full action object to state - actually should return
-// just the conditional which determines whether or not to show error text.
 export function uploadsHasErrored(bool) {
     return {
         type: 'UPLOADS_HAS_ERRORED',
@@ -61,7 +59,6 @@ export function exportsGetData(url) {
                 dispatch(exportsIsLoading(false));
                 return response.data;
             })
-            // .then((response) => response.json())
             .then((exports) => dispatch(exportsGetDataSuccess(exports)))
             .catch((error) => dispatch(exportsHasErrored(true, error.message)));
     };

@@ -1,7 +1,6 @@
 export function exportsHasErrored(state = false, action) {
   switch (action.type) {
     case 'EXPORTS_HAS_ERRORED':
-      // return action.hasErrored;
       return action
 
     default:
@@ -57,7 +56,6 @@ export function exports(state = [], action) {
         return currentExport.guild === "De Profundis";
       })
       return data;
-      // return action.exports;
 
     default:
       return state;

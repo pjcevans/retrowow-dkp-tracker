@@ -18,8 +18,3 @@ class Export extends Component {
 }
 
 export default Export;
-
-// var dkpValues = this.props.export.dkpdata.map(item => {
-//   return <li>{ item }</li>
-// })
-//         <ul>{ dkpValues }</ul>

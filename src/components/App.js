@@ -14,9 +14,6 @@ import { exportsGetData, exportsPostData, uploadsClearErrored, uploadsHasErrored
 class App extends Component {
   constructor(props) {
     super(props);
-    // Binding to individual component state no longer necessary as single state = redux store
-    // this.props.getExports = this.props.getExports.bind(this);
-    // this.props.postExport  = this.props.postExport .bind(this);
   }
 
   componentDidMount() {
@@ -76,7 +73,7 @@ App.propTypes = {
 
 const mapStateToProps = (state) => {
     return {
-        exports: state.exports, // passing exports.exports here should work fine?
+        exports: state.exports,
         exportsHasErrored: state.exportsHasErrored,
         exportsIsLoading: state.exportsIsLoading,
         uploadsHasErrored: state.uploadsHasErrored,
@@ -96,11 +93,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);
-
-
-
-        //
-        //
-        // <DkpMetadata data={ this.props.exports } />
-        // <ExportForm onExportSubmit={ this.props.postExport }/>
-        // <ExportList data={ this.props.exports }/>

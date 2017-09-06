@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import style from './style';
 
 class DkpMetadata extends Component {
   render() {
@@ -16,13 +15,13 @@ class DkpMetadata extends Component {
 
         //remove all zero value dkp entries
         dkpValues = latestExport.dkparray.filter(item => {
-          return parseInt(item.dkp) !== 0;
+          return parseInt(item.dkp, 10) !== 0;
         })
 
         var totalDkp = 0;
 
         dkpValues.forEach((item) => {
-          totalDkp += parseInt(item.dkp);
+          totalDkp += parseInt(item.dkp, 10);
         });
 
         if (dkpValues.length) {

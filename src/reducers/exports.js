@@ -41,7 +41,7 @@ export function exportsIsLoading(state = false, action) {
   }
 }
 
-export function exports(state = [], action) {
+export function exports(state = {}, action) {
   switch (action.type) {
     case 'EXPORTS_GET_DATA_SUCCESS':
       let data = {};
@@ -57,6 +57,37 @@ export function exports(state = [], action) {
       })
       return data;
 
+    default:
+      return state;
+  }
+}
+
+// state = {members:[],average:true}
+export function graphData(state = {members:[],average:true}, action) {
+  switch (action.type) {
+    case 'ADD_GRAPH_MEMBER':
+      if (state.members.indexOf(action.member) === -1) {
+        return {
+          ...state,
+          members: [...state.members, action.member]
+        }
+      }
+    case 'TOGGLE_GRAPH_AVERAGE':
+      return {
+        ...state,
+        average: action.bool
+      }
+    case 'REMOVE_GRAPH_MEMBER':
+      const index = state.members.indexOf(action.member);
+      // Send original state back if member is not found within array
+      if (index === -1 ){
+        return state
+      }
+      // Remove member from the array
+      return {
+        ...state,
+        members: [...state.members.slice(0, index), ...state.members.slice(index + 1)]
+      }
     default:
       return state;
   }

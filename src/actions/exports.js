@@ -60,7 +60,7 @@ export function exportsGetData(url) {
                 return response.data;
             })
             .then((exports) => dispatch(exportsGetDataSuccess(exports)))
-            .catch((error) => dispatch(exportsHasErrored(true, error.message)));
+            .catch((error) => dispatch(exportsHasErrored(true)));
     };
 }
 
@@ -76,4 +76,25 @@ export function exportsPostData(url, dkpExport) {
         dispatch(uploadsHasErrored(true))
       });
   }
+}
+
+export function addGraphMember(member) {
+    return {
+        type: 'ADD_GRAPH_MEMBER',
+        member
+    };
+}
+
+export function removeGraphMember(member) {
+    return {
+        type: 'REMOVE_GRAPH_MEMBER',
+        member
+    };
+}
+
+export function toggleGraphAverage(bool) {
+    return {
+        type: 'TOGGLE_GRAPH_AVERAGE',
+        bool
+    };
 }

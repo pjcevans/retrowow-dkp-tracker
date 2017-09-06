@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import Export from './Export';
+import ConfiguredGraph from './ConfiguredGraph';
 import style from './style';
-import { LineChart, Line, CartesianGrid, XAxis, YAxis, Tooltip } from 'recharts';
 
 
 class ExportList extends Component {
@@ -24,8 +23,9 @@ class ExportList extends Component {
   }
 
   render() {
-    let exportTableData = []
-    var lastDKPValue = 0;
+    let exportTableData = [];
+    let lastDKPValue = 0;
+    let matchInfo = "";
     // Given a search term, build a dataset for just that user
     // Note: this should probably actually be handled with a db query
     // rather than pulling in the whole dataset and grokking it in the browser
@@ -40,13 +40,16 @@ class ExportList extends Component {
         let match = itemData.find((item) => { return item.name === this.state.searchTerm })
 
         if (match) {
-          let timeUTC = new Date(parseInt(item.date)).toUTCString().toString();
+          // Populate table of dkp changes
+          let timeUTC = new Date(parseInt(item.date, 10)).toUTCString().toString();
           exportTableRow.date = timeUTC;
           exportTableRow.day = timeUTC.substring(0,3);
-          exportTableRow.dkp = parseInt(match.dkp);
-          exportTableRow.change = parseInt(exportTableRow.dkp) - lastDKPValue;
+          exportTableRow.dkp = parseInt(match.dkp, 10);
+          exportTableRow.change = parseInt(exportTableRow.dkp, 10) - lastDKPValue;
           lastDKPValue = exportTableRow.dkp
           exportTableData.push(exportTableRow)
+          // Populate match info & options
+          matchInfo = <div><h3>{this.state.searchTerm}</h3><button onClick={() => this.props.addGraphMember(this.state.searchTerm)}>Add to Graph</button></div>;
         }
       })
 
@@ -55,19 +58,16 @@ class ExportList extends Component {
         var exportTableRows = exportTableData.map(item => {
           return (
             <tr><td>{item.date}</td><td>{item.dkp}</td><td>{item.change}</td></tr>
-          )
+          );
         })
 
         // Add header row
-        exportTableRows.push(<tr><th>Date</th><th>Dkp</th><th>Change</th></tr>)
+        exportTableRows.push(<tr><th>Date</th><th>Dkp</th><th>Change</th></tr>);
 
         // Display most recent first
         exportTableRows.reverse();
       }
     }
-
-
-
 
     return (
       <div>
@@ -78,18 +78,14 @@ class ExportList extends Component {
            value={this.state.searchTerm}
            onChange={this.searchFilter.bind(this)} />
         </div>
+        {matchInfo}
         <div style={ style.commentList }>
           <table>
             <tbody>
-          { (exportTableRows) ? exportTableRows : <tr><td>No player selected</td></tr>}
+              { (exportTableRows) ? exportTableRows : <tr><td>No player selected</td></tr>}
             </tbody>
           </table>
-          <LineChart width={700} height={550} data={exportTableData}>
-            <Line type="monotone" dataKey="dkp" stroke="#8884d8" />
-            <XAxis dataKey="day" />
-            <YAxis />
-            <Tooltip />
-          </LineChart>
+            {(this.props.data) ? <ConfiguredGraph data={this.props.data}/> : null}
         </div>
       </div>
     )
@@ -97,3 +93,11 @@ class ExportList extends Component {
 }
 
 export default ExportList;
+
+//
+// <LineChart width={700} height={550} data={exportTableData}>
+//   <Line type="monotone" dataKey="dkp" stroke="#8884d8" />
+//   <XAxis dataKey="day" />
+//   <YAxis />
+//   <Tooltip />
+// </LineChart>

@@ -9,12 +9,9 @@ import ExportList from './ExportList';
 import ExportForm from './ExportForm';
 import style from './style';
 import { connect } from 'react-redux';
-import { exportsGetData, exportsPostData, uploadsClearErrored, uploadsHasErrored, uploadsClearSucceeded, uploadsHasSucceeded } from '../actions/exports';
+import { exportsGetData, exportsPostData, uploadsClearErrored, uploadsHasErrored, uploadsClearSucceeded, uploadsHasSucceeded, addGraphMember } from '../actions/exports';
 
 class App extends Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     this.props.getExports('http://localhost:3001/api/exports');
@@ -37,11 +34,14 @@ class App extends Component {
            <hr/>
 
           <Route exact path="/ce" render={(props) => (<div><DkpMetadata data={ this.props.exports.ce }/>
-                                                    <ExportList data={ this.props.exports.ce }/></div>)} />
+                                                    <ExportList data={ this.props.exports.ce }
+                                                                addGraphMember= {this.props.addGraphMember} /></div>)} />
           <Route exact path="/ggc" render={(props) => (<div><DkpMetadata data={ this.props.exports.ggc }/>
-                                                    <ExportList data={ this.props.exports.ggc }/></div>)} />
+                                                    <ExportList data={ this.props.exports.ggc }
+                                                                addGraphMember= {this.props.addGraphMember} /></div>)} />
           <Route exact path="/dp" render={(props) => (<div><DkpMetadata data={ this.props.exports.dp }/>
-                                                    <ExportList data={ this.props.exports.dp }/></div>)} />
+                                                    <ExportList data={ this.props.exports.dp }
+                                                                addGraphMember= {this.props.addGraphMember} /></div>)} />
           <Route path="/upload" render={(props) => (<ExportForm onExportSubmit={ this.props.postExport }
                                                                 uploadsClearErrored={ this.props.uploadsClearErrored }
                                                                 uploadsThrowErrored={ this.props.uploadsThrowErrored }
@@ -64,6 +64,7 @@ App.propTypes = {
   uploadsThrowErrored: PropTypes.func.isRequired,
   uploadsClearSucceeded: PropTypes.func.isRequired,
   uploadsThrowSucceeded: PropTypes.func.isRequired,
+  addGraphMember: PropTypes.func.isRequired,
   exports: PropTypes.object.isRequired,
   exportsHasErrored: PropTypes.bool.isRequired,
   exportsIsLoading: PropTypes.bool.isRequired,
@@ -88,7 +89,8 @@ const mapDispatchToProps = (dispatch) => {
         uploadsClearErrored: (bool) => dispatch(uploadsClearErrored(bool)),
         uploadsThrowErrored: (bool) => dispatch(uploadsHasErrored(bool)),
         uploadsClearSucceeded: (bool) => dispatch(uploadsClearSucceeded(bool)),
-        uploadsThrowSucceeded: (bool) => dispatch(uploadsHasSucceeded(bool))
+        uploadsThrowSucceeded: (bool) => dispatch(uploadsHasSucceeded(bool)),
+        addGraphMember: (member) => dispatch(addGraphMember(member))
     };
 };
 

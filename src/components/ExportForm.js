@@ -54,7 +54,8 @@ class ExportForm extends Component {
     let stringStart = dkp.indexOf("{")
     let shortenedString = dkp.substring(stringStart)
     let filteredString = shortenedString.replace(/=/g, ":")
-    filteredString = filteredString.replace(/[\[\]']+/g,'')
+    // Changed regex from /[\[\]']+/g due to "warning of unnecessary escape" - however not sure if it really is unnecessary!
+    filteredString = filteredString.replace(/[[\]']+/g,'')
     filteredString = filteredString.replace(/,(?=[^,]*$)/, '')
     try {
       let parsedData = JSON.parse(filteredString);

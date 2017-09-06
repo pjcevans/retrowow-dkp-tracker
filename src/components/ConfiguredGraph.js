@@ -11,15 +11,14 @@ class ConfiguredGraph extends Component {
 
   render() {
     return (
-      <div>{this.props.graphData.members}
       <Graph data={this.props.data}
-             graphData={this.props.graphData.members}
+             graphData={this.props.graphData}
              removeGraphMember={this.props.removeGraphMember}
-             toggleGraphAverage={this.props.toggleGraphAverage} /></div>
+             toggleGraphAverage={this.props.toggleGraphAverage}
+             graphType={this.props.graphData.graphType}/>
     )
   }
 }
-
 ConfiguredGraph.propTypes = {
   data: PropTypes.array.isRequired,
   graphData: PropTypes.object.isRequired,

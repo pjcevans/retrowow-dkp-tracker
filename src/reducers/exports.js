@@ -63,7 +63,7 @@ export function exports(state = {}, action) {
 }
 
 // state = {members:[],average:true}
-export function graphData(state = {members:[],average:true}, action) {
+export function graphData(state = {members:[],average:true,graphType:"totalDkp"}, action) {
   switch (action.type) {
     case 'ADD_GRAPH_MEMBER':
       if (state.members.indexOf(action.member) === -1) {
@@ -87,6 +87,11 @@ export function graphData(state = {members:[],average:true}, action) {
       return {
         ...state,
         members: [...state.members.slice(0, index), ...state.members.slice(index + 1)]
+      }
+    case 'SELECT_GRAPH_TYPE':
+      return {
+        ...state,
+        graphType: action.graphType
       }
     default:
       return state;

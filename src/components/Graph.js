@@ -1,5 +1,5 @@
 import React from 'react';
-import { LineChart, Line, XAxis, YAxis, Tooltip, Legend } from 'recharts';
+import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
 
 // <Graph data={this.props.data}
 //        graphData={this.props.graphData}
@@ -16,46 +16,89 @@ const Graph = (props) => {
     }
     return color;
   }
+  var selectedGraphMembers = ["Cjzz", "Delnadre"];
+  var selectedGraphLines = [];
+  var selectedGraphData = [];
+  var selectedGraphChangeData = [];
+  var selectedGraphMemberButtons = [];
+  selectedGraphMembers = props.graphData.members;
+  selectedGraphData = [];
+  selectedGraphChangeData = [];
+  const reversedData = [...props.data].reverse();
 
-  var exportTableMembers = ["Cjzz", "Delnadre"];
-  var exportTableLines = [];
-  var exportTableData = [
-    {
-      "Cjzz": 500,
-      "Delnadre": 600,
-      day: "mon",
-      date: 123
-    },
-    {
-      "Cjzz": 600,
-      "Delnadre": 700,
-      day: "tue",
-      date: 124
-    },
-    {
-      "Cjzz": 800,
-      "Delnadre": 200,
-      day: "wed",
-      date: 125
+    // For each export within the exports database
+    reversedData.forEach((dataset) => {
+      let graphItem = {};
+      let timeUTC = new Date(parseInt(dataset.date, 10)).toUTCString().toString();
+      graphItem.date = timeUTC;
+      graphItem.day = timeUTC.substring(0,3);
+      // For each item within the dkp export, add dkp values for the selected players
+      dataset.dkparray.forEach((item) => {
+        let lastDKPValue = 0;
+        if (selectedGraphMembers.indexOf(item.name) !== -1) {
+          graphItem[item.name] = parseInt(item.dkp, 10);
+        }
+      })
+      selectedGraphData.push(graphItem);
+    })
+
+    if (props.graphType === "changeDkp") {
+      console.log("test")
+      selectedGraphMembers.forEach((member) => {
+        let lastDKPValue = 0
+        selectedGraphData.forEach((item, index) => {
+          if (item[member]) {
+            let saveDKP = parseInt(item[member], 10);
+            // Skip first dkp score since first change value will be way too high -
+            // Most databases do not start from Raid Day 1, as such the first value
+            // Will always be too high.
+            if (index > 0) {
+              console.log(index)
+              item[member] = parseInt(item[member], 10) - lastDKPValue;
+            } else {
+              item[member] = 0;
+            }
+            lastDKPValue = saveDKP;
+          }
+        })
+
+      })
+
     }
-  ]
-  console.log(props.graphData)
-  // exportTableMembers = props.graphData.members;
+
+  console.log("Total data: " + JSON.stringify(selectedGraphData))
 
 
-  props.graphData.forEach(member => {
-    exportTableLines.push(<Line key={member} type="monotone" dataKey={member} stroke={getRandomColor()}  />)
+  // let timeUTC = new Date(parseInt(item.date, 10)).toUTCString().toString();
+  // graphItem.date = timeUTC;
+  // graphItem.day = timeUTC.substring(0,3);
+  // graphItem.dkp = parseInt(match.dkp, 10);
+  // graphItem.change = parseInt(graphItem.dkp, 10) - lastDKPValue;
+
+  selectedGraphMembers.forEach(member => {
+    selectedGraphLines.push(<Line key={member} type="monotone" dataKey={member} stroke={getRandomColor()}  />)
+  })
+
+  selectedGraphMembers.forEach(member => {
+    selectedGraphMemberButtons.push(<li key={member}><button onClick={() => props.removeGraphMember(member)}>{member}</button></li>)
   })
 
   return(
-    <LineChart width={700} height={550} data={exportTableData}>
-      {exportTableLines}
+    <div>
+      <LineChart width={700} height={550} data={selectedGraphData}>
+        {selectedGraphLines}
 
-      <XAxis dataKey="day" />
-      <YAxis />
-      <Tooltip />
-      <Legend />
-    </LineChart>
+        <XAxis dataKey="day" />
+        <YAxis />
+        <CartesianGrid strokeDasharray="3 3"/>
+        <Tooltip />
+        <Legend />
+      </LineChart>
+      <h4>Remove from graph:</h4>
+      <ul>
+        {selectedGraphMemberButtons}
+      </ul>
+    </div>
   )
 
 }

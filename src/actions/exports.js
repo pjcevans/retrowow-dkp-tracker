@@ -98,3 +98,10 @@ export function toggleGraphAverage(bool) {
         bool
     };
 }
+
+export function selectGraphType(graphType) {
+    return {
+        type: 'SELECT_GRAPH_TYPE',
+        graphType
+    };
+}

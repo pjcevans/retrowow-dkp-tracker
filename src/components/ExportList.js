@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import ConfiguredGraph from './ConfiguredGraph';
 import style from './style';
 
-
 class ExportList extends Component {
   constructor(props) {
     super(props);
@@ -30,7 +29,7 @@ class ExportList extends Component {
     // Note: this should probably actually be handled with a db query
     // rather than pulling in the whole dataset and grokking it in the browser
     if (this.props.data) {
-      let reversedData = this.props.data.reverse();
+      const reversedData = [...this.props.data].reverse();
       reversedData.forEach(item => {
         let exportTableRow = {};
         // let parsedData = JSON.parse(item.dkpdata);
@@ -57,12 +56,12 @@ class ExportList extends Component {
         // Build table items for each row of data
         var exportTableRows = exportTableData.map(item => {
           return (
-            <tr><td>{item.date}</td><td>{item.dkp}</td><td>{item.change}</td></tr>
+            <tr key={item.date}><td>{item.date}</td><td>{item.dkp}</td><td>{item.change}</td></tr>
           );
         })
 
         // Add header row
-        exportTableRows.push(<tr><th>Date</th><th>Dkp</th><th>Change</th></tr>);
+        exportTableRows.push(<tr key="header"><th>Date</th><th>Dkp</th><th>Change</th></tr>);
 
         // Display most recent first
         exportTableRows.reverse();
@@ -78,6 +77,8 @@ class ExportList extends Component {
            value={this.state.searchTerm}
            onChange={this.searchFilter.bind(this)} />
         </div>
+
+
         {matchInfo}
         <div style={ style.commentList }>
           <table>
@@ -85,7 +86,11 @@ class ExportList extends Component {
               { (exportTableRows) ? exportTableRows : <tr><td>No player selected</td></tr>}
             </tbody>
           </table>
-            {(this.props.data) ? <ConfiguredGraph data={this.props.data}/> : null}
+          <ul>
+            <li onClick={() => this.props.selectGraphType("totalDkp")}>Totals</li>
+            <li onClick={() => this.props.selectGraphType("changeDkp")}>Changes</li>
+          </ul>
+          {(this.props.data) ? <ConfiguredGraph data={this.props.data} /> : null}
         </div>
       </div>
     )
@@ -93,11 +98,3 @@ class ExportList extends Component {
 }
 
 export default ExportList;
-
-//
-// <LineChart width={700} height={550} data={exportTableData}>
-//   <Line type="monotone" dataKey="dkp" stroke="#8884d8" />
-//   <XAxis dataKey="day" />
-//   <YAxis />
-//   <Tooltip />
-// </LineChart>

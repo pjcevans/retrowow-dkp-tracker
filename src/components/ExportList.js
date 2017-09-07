@@ -61,7 +61,7 @@ class ExportList extends Component {
           lastDKPValue = exportTableRow.dkp
           exportTableData.push(exportTableRow)
           // Populate match info & options
-          matchInfo = <div><h3>{this.state.searchTerm}</h3><button onClick={() => this.props.addGraphMember(this.state.searchTerm)}>Add to Graph</button></div>;
+          matchInfo = <div><h3>{this.state.searchTerm}</h3><Button onClick={() => this.props.addGraphMember(this.state.searchTerm)}>Add to Graph</Button></div>;
         }
       })
 
@@ -121,7 +121,13 @@ class ExportList extends Component {
 
 
         <Row>
-          <CollapsibleTextOutput exportTableRows={exportTableRows} selectedPlayer={this.state.searchTerm} />
+          <Col xs={0} md={2}>
+          </Col>
+          <Col xs={12} md={8}>
+            <CollapsibleTextOutput exportTableRows={exportTableRows} selectedPlayer={this.state.searchTerm} />
+          </Col>
+          <Col xs={0} md={2}>
+          </Col>
         </Row>
 
       </Grid>

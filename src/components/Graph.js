@@ -24,10 +24,12 @@ const Graph = (props) => {
   selectedGraphMembers = props.graphData.members;
   selectedGraphData = [];
   selectedGraphChangeData = [];
-  const reversedData = [...props.data].reverse();
+
+    // const reversedData = [...props.data].reverse();
+    // reversedData.forEach((dataset) => {
 
     // For each export within the exports database
-    reversedData.forEach((dataset) => {
+    props.data.forEach((dataset) => {
       let graphItem = {};
       let timeUTC = new Date(parseInt(dataset.date, 10)).toUTCString().toString();
       graphItem.date = timeUTC;

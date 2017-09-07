@@ -55,7 +55,8 @@ app.get('/api/exports', function(req, res) {
         res.send(err);
       //responds with a json object of our database comments.
       res.json(people)
-    }).sort('date');
+    }).sort('-date');
+
   })
   //post new comment to the database
 app.post('/api/exports', function(req, res, next) {

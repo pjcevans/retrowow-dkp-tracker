@@ -29,8 +29,9 @@ class ExportList extends Component {
     // Note: this should probably actually be handled with a db query
     // rather than pulling in the whole dataset and grokking it in the browser
     if (this.props.data) {
-      const reversedData = [...this.props.data].reverse();
-      reversedData.forEach(item => {
+      // const reversedData = [...this.props.data].reverse();
+      // reversedData.forEach(item => {
+      this.props.data.forEach(item => {
         let exportTableRow = {};
         // let parsedData = JSON.parse(item.dkpdata);
         let itemData = item.dkparray;

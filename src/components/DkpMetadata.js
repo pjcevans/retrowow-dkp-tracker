@@ -4,7 +4,7 @@ import { Button, Panel } from 'react-bootstrap';
 class DkpMetadata extends Component {
   constructor(props) {
     super(props);
-    this.state = { open: true };
+    this.state = { contentOpen: true };
   }
 
   render() {
@@ -14,7 +14,6 @@ class DkpMetadata extends Component {
         var dkpLength = 0;
         var averageDkp = 0;
         let reversedData = this.props.data;
-        reversedData.reverse();
 
         let latestExport = reversedData[0];
         let dkpValues = []
@@ -40,10 +39,10 @@ class DkpMetadata extends Component {
 
     return (
       <div>
-        <Button onClick={ ()=> this.setState({ open: !this.state.open })}>
+        <Button  className={"center-block"} onClick={ ()=> this.setState({ contentOpen: !this.state.contentOpen })}>
           Show / Hide text data
         </Button>
-        <Panel collapsible expanded={this.state.open}>
+        <Panel collapsible expanded={this.state.contentOpen}>
           <p>{totalDkp} DKP spread across {dkpLength} characters</p>
           <p>Average DKP = {averageDkp}</p>
         </Panel>

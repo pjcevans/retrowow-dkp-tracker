@@ -71,6 +71,8 @@ export function graphData(state = {members:[],average:true,graphType:"totalDkp"}
           ...state,
           members: [...state.members, action.member]
         }
+      } else {
+        return state
       }
     case 'TOGGLE_GRAPH_AVERAGE':
       return {

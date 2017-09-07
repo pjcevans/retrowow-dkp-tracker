@@ -6,6 +6,7 @@ const style = {
   successMessage: {
     color:'green'
   }
+
 }
 
 module.exports = style;

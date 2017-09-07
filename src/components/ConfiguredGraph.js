@@ -10,12 +10,17 @@ class ConfiguredGraph extends Component {
   // }
 
   render() {
+    console.log(this.props.graphData.members)
     return (
-      <Graph data={this.props.data}
-             graphData={this.props.graphData}
-             removeGraphMember={this.props.removeGraphMember}
-             toggleGraphAverage={this.props.toggleGraphAverage}
-             graphType={this.props.graphData.graphType}/>
+      <div>
+        {(this.props.graphData.members.length > 0)
+          ? <Graph data={this.props.data}
+                   graphData={this.props.graphData}
+                   removeGraphMember={this.props.removeGraphMember}
+                   toggleGraphAverage={this.props.toggleGraphAverage}/>
+          : null
+        }
+      </div>
     )
   }
 }

@@ -23,7 +23,7 @@ class App extends Component {
 
     return (
       <Router>
-        <div style={ style.commentBox }>
+        <div>
 
           <MainNav />
 
@@ -63,7 +63,7 @@ App.propTypes = {
   uploadsClearSucceeded: PropTypes.func.isRequired,
   uploadsThrowSucceeded: PropTypes.func.isRequired,
   addGraphMember: PropTypes.func.isRequired,
-  selectGraphType: PropTypes.func.selectGraphType,
+  selectGraphType: PropTypes.func.isRequired,
   exports: PropTypes.object.isRequired,
   exportsHasErrored: PropTypes.bool.isRequired,
   exportsIsLoading: PropTypes.bool.isRequired,

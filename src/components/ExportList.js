@@ -3,12 +3,21 @@ import ConfiguredGraph from './ConfiguredGraph';
 import CollapsibleTextOutput from './CollapsibleTextOutput';
 import style from './style';
 import DkpMetadata from './DkpMetadata';
-import { Row, Grid, Col } from 'react-bootstrap';
+import { Row, Grid, Col, Tooltip, ButtonGroup, Button, OverlayTrigger } from 'react-bootstrap';
 
 class ExportList extends Component {
   constructor(props) {
     super(props);
-    this.state = { searchTerm: '' };
+    this.state = { searchTerm: '', activeGraph: 1 };
+  }
+
+  activateGraph(activeGraph, e) {
+    console.log(e)
+    e.preventDefault();
+    e.stopPropagation();
+    this.setState({
+      activeGraph: activeGraph
+    });
   }
 
   searchFilter(event) {
@@ -72,6 +81,10 @@ class ExportList extends Component {
       }
     }
 
+    const tooltip = (
+      <Tooltip id="tooltip"><strong>Holy guacamole!</strong> Check this info.</Tooltip>
+    );
+
     return (
       <Grid>
         <Row>
@@ -79,7 +92,7 @@ class ExportList extends Component {
         </Row>
 
         <Row>
-          <Col>
+          <Col xs={12} md={3}>
             <input type="text"
              id="searchbar"
              placeholder="Search for player"
@@ -87,12 +100,22 @@ class ExportList extends Component {
              onChange={this.searchFilter.bind(this)} />
              {matchInfo}
            </Col>
-           <Col>
-           <ul>
-             <li onClick={() => this.props.selectGraphType("totalDkp")}>Totals</li>
-             <li onClick={() => this.props.selectGraphType("changeDkp")}>Changes</li>
-           </ul>
-           {(this.props.data) ? <ConfiguredGraph data={this.props.data} /> : null}
+           <Col xs={12} md={9}>
+
+             <ButtonGroup justified>
+               <ButtonGroup>
+                 <OverlayTrigger placement="top" overlay={tooltip}>
+                   <Button bsStyle="default" onClick={() => this.props.selectGraphType("totalDkp")}><p>Totals</p></Button>
+                 </OverlayTrigger>
+               </ButtonGroup>
+               <ButtonGroup>
+                 <OverlayTrigger placement="top" overlay={tooltip}>
+                  <Button bsStyle="default" onClick={() => this.props.selectGraphType("changeDkp")}><p>Changes</p></Button>
+                 </OverlayTrigger>
+               </ButtonGroup>
+             </ButtonGroup>
+
+             {(this.props.data) ? <ConfiguredGraph data={this.props.data} /> : null}
            </Col>
         </Row>
 

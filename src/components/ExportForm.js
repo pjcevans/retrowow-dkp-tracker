@@ -79,7 +79,7 @@ class ExportForm extends Component {
 
     return (
 
-      <form style={ style.commentForm } onSubmit={ this.handleSubmit }>
+      <form onSubmit={ this.handleSubmit }>
 
         {uploadsHasErrored
           ?  <div>
@@ -96,29 +96,26 @@ class ExportForm extends Component {
                </div>
             : null}
 
-        <ul style={ style.exportFormList }>
-          <li style={ style.exportFormListItem }>
-            <button style={ style.commentFormPost }
-                    onClick={ () => this.fillDate() }
+        <ul>
+          <li>
+            <button onClick={ () => this.fillDate() }
                     type="button">Current date</button>
             <input
               type='text'
               placeholder='The date in milis...'
-              style={ style.commentFormText}
               value={ this.state.date }
               onChange={ this.handleDateChange } />
             </li>
-          <li style={ style.exportFormListItem }>
+          <li>
             <label for="dkp">Addon output: </label>
             <input
               name='dkp'
               type='text'
               placeholder='The output of the export addon...'
-              style={ style.commentFormText}
               value={ this.state.dkp }
               onChange={ this.handleDkpChange } />
           </li>
-          <li style={ style.exportFormListItem }>
+          <li>
             <label for="guild">Guild: </label>
             <select name="guild" onChange={ this.handleGuildChange } >
               <option value="Certus Excessum" selected="selected">Certus Excessum</option>
@@ -126,20 +123,18 @@ class ExportForm extends Component {
               <option value="De Profundis">De Profundis</option>
             </select>
           </li>
-          <li style={ style.exportFormListItem }>
+          <li>
             <label for="password">Password: </label>
             <input
               name='password'
               type='text'
               placeholder='Enter super secure password...'
-              style={ style.commentFormText}
               value={ this.state.password }
               onChange={ this.handlePasswordChange } />
           </li>
-          <li style={ style.exportFormListItem }>
+          <li>
               <input
                 type='submit'
-                style={ style.commentFormPost }
                 value='Submit' />
           </li>
         </ul>

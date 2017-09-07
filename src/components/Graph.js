@@ -33,7 +33,7 @@ const Graph = (props) => {
       let graphItem = {};
       let timeUTC = new Date(parseInt(dataset.date, 10)).toUTCString().toString();
       graphItem.date = timeUTC;
-      graphItem.day = timeUTC.substring(0,3);
+      graphItem.day = timeUTC.substring(0,11);
       // For each item within the dkp export, add dkp values for the selected players
       dataset.dkparray.forEach((item) => {
         let lastDKPValue = 0;

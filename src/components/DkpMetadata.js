@@ -1,6 +1,12 @@
 import React, { Component } from 'react';
+import { Button, Panel } from 'react-bootstrap';
 
 class DkpMetadata extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { open: true };
+  }
+
   render() {
 
     if (this.props.data) {
@@ -34,8 +40,13 @@ class DkpMetadata extends Component {
 
     return (
       <div>
-        <p>{totalDkp} DKP spread across {dkpLength} characters</p>
-        <p>Average DKP = {averageDkp}</p>
+        <Button onClick={ ()=> this.setState({ open: !this.state.open })}>
+          Show / Hide text data
+        </Button>
+        <Panel collapsible expanded={this.state.open}>
+          <p>{totalDkp} DKP spread across {dkpLength} characters</p>
+          <p>Average DKP = {averageDkp}</p>
+        </Panel>
       </div>
     )
   }

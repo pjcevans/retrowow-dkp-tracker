@@ -4,8 +4,8 @@ import {
   Route,
   Link
 } from 'react-router-dom'
-import DkpMetadata from './DkpMetadata';
 import ExportList from './ExportList';
+import MainNav from './MainNav';
 import ExportForm from './ExportForm';
 import style from './style';
 import { connect } from 'react-redux';
@@ -24,27 +24,22 @@ class App extends Component {
     return (
       <Router>
         <div style={ style.commentBox }>
-          <h2>VanillaGaming DKP Tracker</h2>
-           <ul>
-             <li><Link to="/ce">Certus Excessum</Link></li>
-             <li><Link to="/ggc">Goldshire Golfclub</Link></li>
-             <li><Link to="/dp">De Profundis</Link></li>
-           </ul>
+
+          <MainNav />
+
+
 
            <hr/>
 
-          <Route exact path="/ce" render={(props) => (<div><DkpMetadata data={ this.props.exports.ce }/>
-                                                    <ExportList data={ this.props.exports.ce }
+          <Route exact path="/ce" render={(props) => (<ExportList data={ this.props.exports.ce }
                                                                 addGraphMember= {this.props.addGraphMember}
-                                                                selectGraphType={this.props.selectGraphType}/></div>)} />
-          <Route exact path="/ggc" render={(props) => (<div><DkpMetadata data={ this.props.exports.ggc }/>
-                                                    <ExportList data={ this.props.exports.ggc }
+                                                                selectGraphType={this.props.selectGraphType}/>)} />
+          <Route exact path="/ggc" render={(props) => (<ExportList data={ this.props.exports.ggc }
                                                                 addGraphMember= {this.props.addGraphMember}
-                                                                selectGraphType={this.props.selectGraphType}/></div>)} />
-          <Route exact path="/dp" render={(props) => (<div><DkpMetadata data={ this.props.exports.dp }/>
-                                                    <ExportList data={ this.props.exports.dp }
+                                                                selectGraphType={this.props.selectGraphType}/>)} />
+          <Route exact path="/dp" render={(props) => (<ExportList data={ this.props.exports.dp }
                                                                 addGraphMember= {this.props.addGraphMember}
-                                                                selectGraphType={this.props.selectGraphType}/></div>)} />
+                                                                selectGraphType={this.props.selectGraphType}/>)} />
           <Route path="/upload" render={(props) => (<ExportForm onExportSubmit={ this.props.postExport }
                                                                 uploadsClearErrored={ this.props.uploadsClearErrored }
                                                                 uploadsThrowErrored={ this.props.uploadsThrowErrored }

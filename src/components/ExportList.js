@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import ConfiguredGraph from './ConfiguredGraph';
+import CollapsibleTextOutput from './CollapsibleTextOutput';
 import style from './style';
+import DkpMetadata from './DkpMetadata';
+import { Row, Grid, Col } from 'react-bootstrap';
 
 class ExportList extends Component {
   constructor(props) {
@@ -64,36 +67,41 @@ class ExportList extends Component {
         // Add header row
         exportTableRows.push(<tr key="header"><th>Date</th><th>Dkp</th><th>Change</th></tr>);
 
-        // Display most recent first
-        exportTableRows.reverse();
+        // // Display most recent first
+        // exportTableRows.reverse();
       }
     }
 
     return (
-      <div>
-        <div id="searchbar">
-          <input type="text"
-           id="searchbar"
-           placeholder="Search for player"
-           value={this.state.searchTerm}
-           onChange={this.searchFilter.bind(this)} />
-        </div>
+      <Grid>
+        <Row>
+          <DkpMetadata data={ this.props.data }/>
+        </Row>
+
+        <Row>
+          <Col>
+            <input type="text"
+             id="searchbar"
+             placeholder="Search for player"
+             value={this.state.searchTerm}
+             onChange={this.searchFilter.bind(this)} />
+             {matchInfo}
+           </Col>
+           <Col>
+           <ul>
+             <li onClick={() => this.props.selectGraphType("totalDkp")}>Totals</li>
+             <li onClick={() => this.props.selectGraphType("changeDkp")}>Changes</li>
+           </ul>
+           {(this.props.data) ? <ConfiguredGraph data={this.props.data} /> : null}
+           </Col>
+        </Row>
 
 
-        {matchInfo}
-        <div style={ style.commentList }>
-          <table>
-            <tbody>
-              { (exportTableRows) ? exportTableRows : <tr><td>No player selected</td></tr>}
-            </tbody>
-          </table>
-          <ul>
-            <li onClick={() => this.props.selectGraphType("totalDkp")}>Totals</li>
-            <li onClick={() => this.props.selectGraphType("changeDkp")}>Changes</li>
-          </ul>
-          {(this.props.data) ? <ConfiguredGraph data={this.props.data} /> : null}
-        </div>
-      </div>
+        <Row>
+          <CollapsibleTextOutput exportTableRows={exportTableRows} selectedPlayer={this.state.searchTerm} />
+        </Row>
+
+      </Grid>
     )
   }
 }

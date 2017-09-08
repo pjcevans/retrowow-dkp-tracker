@@ -13,8 +13,14 @@ import { exportsGetData, exportsPostData, uploadsClearErrored, uploadsHasErrored
 
 class App extends Component {
 
+  if (process.env.NODE_ENV === "production") {
+    var url = "https://cedkp.herokuapp.com/api/exports";
+  } else {
+    var url = "http://localhost:3001/api/exports";
+  }
+
   componentDidMount() {
-    this.props.getExports('http://localhost:3001/api/exports');
+    this.props.getExports(url);
   }
 
   render() {

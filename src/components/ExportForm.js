@@ -68,7 +68,7 @@ class ExportForm extends Component {
         exportArray.push(exportItem);
       }
       // Submit the export and clear current state
-      this.props.onExportSubmit('http://localhost:3001/api/exports', { date: date, guild: this.state.guild, dkparray: exportArray, password: this.state.password });
+      this.props.onExportSubmit('https://vgdkp.herokuapp.com/api/exports', { date: date, guild: this.state.guild, dkparray: exportArray, password: this.state.password });
       this.setState({ date: '', dkp: '', password: '' });
     } catch (error) {
       this.props.uploadsThrowErrored(true)

@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 import style from './style';
+import UploadInformationPanel from './UploadInformationPanel'
+import { Row, Grid } from 'react-bootstrap';
 
 class ExportForm extends Component {
   constructor(props) {
@@ -78,68 +80,78 @@ class ExportForm extends Component {
     const uploadsHasSucceeded = this.props.uploadsHasSucceeded;
 
     return (
+      <Grid>
+        <Row>
+        <form style={ style.commentForm } onSubmit={ this.handleSubmit }>
 
-      <form onSubmit={ this.handleSubmit }>
-
-        {uploadsHasErrored
-          ?  <div>
-               <h2 style={ style.errorMessage } >Upload failed</h2>
-               <p>Did you enter the correct guild + password combination?</p>
-               <p>Was the data correctly formatted?</p>
-             </div>
-          : null}
-
-          {uploadsHasSucceeded
+          {uploadsHasErrored
             ?  <div>
-                 <h2 style={ style.successMessage } >Upload Succeeded</h2>
-                 <p>gj!</p>
+                 <h2 style={ style.errorMessage } >Upload failed</h2>
+                 <p>Did you enter the correct guild + password combination?</p>
+                 <p>Was the data correctly formatted?</p>
                </div>
             : null}
 
-        <ul>
-          <li>
-            <button onClick={ () => this.fillDate() }
-                    type="button">Current date</button>
-            <input
-              type='text'
-              placeholder='The date in milis...'
-              value={ this.state.date }
-              onChange={ this.handleDateChange } />
-            </li>
-          <li>
-            <label>Addon output: 
+            {uploadsHasSucceeded
+              ?  <div>
+                   <h2 style={ style.successMessage } >Upload Succeeded</h2>
+                   <p>gj!</p>
+                 </div>
+              : null}
+
+          <ul style={ style.exportFormList }>
+            <li style={ style.exportFormListItem }>
+              <button style={ style.commentFormPost }
+                      onClick={ () => this.fillDate() }
+                      type="button">Current date</button>
               <input
-                name='dkp'
                 type='text'
-                placeholder='The output of the export addon...'
-                value={ this.state.dkp }
-                onChange={ this.handleDkpChange } />
-            </label>
-          </li>
-          <li>
-            <label for="guild">Guild: </label>
-            <select name="guild" onChange={ this.handleGuildChange } >
-              <option value="Certus Excessum" selected="selected">Certus Excessum</option>
-              <option value="Goldshire Golfclub">Goldshire Golfclub</option>
-              <option value="De Profundis">De Profundis</option>
-            </select>
-          </li>
-          <li>
-            <label for="password">Password: </label>
-            <input
-              name='password'
-              type='text'
-              placeholder='Enter super secure password...'
-              value={ this.state.password }
-              onChange={ this.handlePasswordChange } />
-          </li>
-          <li>
+                placeholder='The date in milis...'
+                style={ style.commentFormText}
+                value={ this.state.date }
+                onChange={ this.handleDateChange } />
+              </li>
+            <li style={ style.exportFormListItem }>
+              <label for="dkp">Addon output: </label>
+                <input
+                  name='dkp'
+                  type='text'
+                  placeholder='The output of the export addon...'
+                  style={ style.commentFormText}
+                  value={ this.state.dkp }
+                  onChange={ this.handleDkpChange } />
+            </li>
+            <li style={ style.exportFormListItem }>
+              <label for="guild">Guild: </label>
+              <select name="guild" defaultValue="Certus Excessum" onChange={ this.handleGuildChange } >
+                <option value="Certus Excessum">Certus Excessum</option>
+                <option value="Goldshire Golfclub">Goldshire Golfclub</option>
+                <option value="De Profundis">De Profundis</option>
+              </select>
+            </li>
+            <li style={ style.exportFormListItem }>
+              <label for="password">Password: </label>
               <input
-                type='submit'
-                value='Submit' />
-          </li>
-        </ul>
-      </form>
+                name='password'
+                type='text'
+                placeholder='Enter super secure password...'
+                style={ style.commentFormText}
+                value={ this.state.password }
+                onChange={ this.handlePasswordChange } />
+            </li>
+            <li>
+                <input
+                  type='submit'
+                  style={ style.commentFormPost }
+                  value='Submit' />
+            </li>
+          </ul>
+        </form>
+        </Row>
+        <Row>
+        <UploadInformationPanel />
+        </Row>
+      </Grid>
     )
   }
 }

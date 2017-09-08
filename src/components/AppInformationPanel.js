@@ -43,6 +43,12 @@ const AppInformationPanel = (props) => {
       DKP different players earned over time.
     </Tooltip>
   );
+  const colours = (
+    <Tooltip id="colours">
+      Clicking the option for the graph you are currently on randomises the colours,
+      E.g. if on the Totals graph click "Totals" to randomise colours.
+    </Tooltip>
+  );
   const tips = (
     <Tooltip id="tips">
       <ul>
@@ -55,6 +61,16 @@ const AppInformationPanel = (props) => {
         <li>Add everyone you&#8217;re competing for loot with to the Totals graph and
             then weep or rejoice!</li>
       </ul>
+    </Tooltip>
+  );
+  const contact = (
+    <Tooltip id="contact">
+      Please find me on Discord: pjce#4547
+    </Tooltip>
+  );
+  const bugs = (
+    <Tooltip id="bugs">
+      Selected players persist despite guild change - sorry!
     </Tooltip>
   );
   return(
@@ -77,6 +93,15 @@ const AppInformationPanel = (props) => {
       </OverlayTrigger>
       <OverlayTrigger placement="right" overlay={huh}>
         <Button bsStyle="default">What is a dkp? What is a VG?</Button>
+      </OverlayTrigger>
+      <OverlayTrigger placement="right" overlay={contact}>
+        <Button bsStyle="default">Found a bug? / Contact</Button>
+      </OverlayTrigger>
+      <OverlayTrigger placement="right" overlay={colours}>
+        <Button bsStyle="default">Line colours are too light</Button>
+      </OverlayTrigger>
+      <OverlayTrigger placement="right" overlay={bugs}>
+        <Button bsStyle="default">Known bugs</Button>
       </OverlayTrigger>
     </Panel>
     </div>

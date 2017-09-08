@@ -12,9 +12,12 @@ let auth = process.env.DKP_TEST_MONGODB;
 var app = express();
 
 //set our port to either a predetermined port number if you have set it up, or 3001
-var port = process.env.API_PORT || 3001;
+var port = process.env.PORT || 3001;
 
-app.use(express.static(__dirname + "/build"));
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(__dirname + "/build"));
+}
 
 // Express only serves static assets in production
 

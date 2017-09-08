@@ -13,14 +13,8 @@ import { exportsGetData, exportsPostData, uploadsClearErrored, uploadsHasErrored
 
 class App extends Component {
 
-  if (process.env.NODE_ENV === "production") {
-    var url = "https://vgdkp.herokuapp.com/api/exports";
-  } else {
-    var url = "http://localhost:3001/api/exports";
-  }
-
   componentDidMount() {
-    this.props.getExports(url);
+    this.props.getExports('https://vgdkp.herokuapp.com/api/exports');
   }
 
   render() {

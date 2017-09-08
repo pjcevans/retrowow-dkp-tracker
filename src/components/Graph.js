@@ -1,5 +1,6 @@
 import React from 'react';
 import { LineChart, Line, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
+import { Button, ButtonGroup, Label } from 'react-bootstrap';
 
 const Graph = (props) => {
 
@@ -14,11 +15,9 @@ const Graph = (props) => {
   var selectedGraphMembers = ["Cjzz", "Delnadre"];
   var selectedGraphLines = [];
   var selectedGraphData = [];
-  var selectedGraphChangeData = [];
   var selectedGraphMemberButtons = [];
   selectedGraphMembers = props.graphData.members;
   selectedGraphData = [];
-  selectedGraphChangeData = [];
 
   // For each export within the exports database
   props.data.forEach((dataset) => {
@@ -28,7 +27,6 @@ const Graph = (props) => {
     graphItem.day = timeUTC.substring(0,11);
     // For each item within the dkp export, add dkp values for the selected players
     dataset.dkparray.forEach((item) => {
-      let lastDKPValue = 0;
       if (selectedGraphMembers.indexOf(item.name) !== -1) {
         graphItem[item.name] = parseInt(item.dkp, 10);
       }
@@ -64,24 +62,24 @@ const Graph = (props) => {
   })
 
   selectedGraphMembers.forEach(member => {
-    selectedGraphMemberButtons.push(<li key={member}><button onClick={() => props.removeGraphMember(member)}>{member}</button></li>)
+    selectedGraphMemberButtons.push(<Button key={member} bsStyle="primary" onClick={() => props.removeGraphMember(member)}>{member}</Button>)
   })
 
   return(
     <div>
+
+      <div>
+        <Label>Remove from graph:</Label><ButtonGroup style={{marginLeft:"5px"}}>{selectedGraphMemberButtons}</ButtonGroup>
+      </div>
+
       <LineChart width={700} height={550} data={selectedGraphData}>
         {selectedGraphLines}
-
         <XAxis dataKey="day" />
         <YAxis />
         <CartesianGrid strokeDasharray="3 3"/>
         <Tooltip />
         <Legend />
       </LineChart>
-      <h4>Remove from graph:</h4>
-      <ul>
-        {selectedGraphMemberButtons}
-      </ul>
     </div>
   )
 

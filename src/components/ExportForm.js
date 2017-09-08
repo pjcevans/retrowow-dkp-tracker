@@ -107,13 +107,14 @@ class ExportForm extends Component {
               onChange={ this.handleDateChange } />
             </li>
           <li>
-            <label for="dkp">Addon output: </label>
-            <input
-              name='dkp'
-              type='text'
-              placeholder='The output of the export addon...'
-              value={ this.state.dkp }
-              onChange={ this.handleDkpChange } />
+            <label>Addon output: 
+              <input
+                name='dkp'
+                type='text'
+                placeholder='The output of the export addon...'
+                value={ this.state.dkp }
+                onChange={ this.handleDkpChange } />
+            </label>
           </li>
           <li>
             <label for="guild">Guild: </label>

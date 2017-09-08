@@ -10,7 +10,6 @@ class ConfiguredGraph extends Component {
   // }
 
   render() {
-    console.log(this.props.graphData.members)
     return (
       <div>
         {(this.props.graphData.members.length > 0)

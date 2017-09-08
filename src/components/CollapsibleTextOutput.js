@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Button, Panel, Table } from 'react-bootstrap';
-import style from './style';
+import FaAngleUp from 'react-icons/lib/fa/angle-up';
+import FaAngleDown from 'react-icons/lib/fa/angle-down';
 
 class CollapsibleTextOutput extends Component {
   constructor(props) {
@@ -12,9 +13,11 @@ class CollapsibleTextOutput extends Component {
 
     return (
       <div>
-        <Button className={"center-block"} onClick={ ()=> this.setState({ tableOpen: !this.state.tableOpen })}>
-          Show / Hide text data
-        </Button>
+        <Button bsSize="small" className={"center-block"} onClick={ ()=> this.setState({ tableOpen: !this.state.tableOpen })}>
+        {(this.state.tableOpen)
+          ? <FaAngleUp size={20} />
+          : <FaAngleDown size={20} />
+        }        </Button>
         <Panel collapsible expanded={this.state.tableOpen}>
           <h4>Full data for player, {this.props.selectedPlayer}</h4>
           <Table responsive>

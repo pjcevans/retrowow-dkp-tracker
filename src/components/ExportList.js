@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
 import ConfiguredGraph from './ConfiguredGraph';
 import CollapsibleTextOutput from './CollapsibleTextOutput';
-import style from './style';
 import DkpMetadata from './DkpMetadata';
-import { Row, Grid, Col, Tooltip, ButtonGroup, Button, OverlayTrigger } from 'react-bootstrap';
+import AppInformationPanel from './AppInformationPanel';
+import { Row, Grid, Col, Tooltip, ButtonGroup, Button, OverlayTrigger, Panel } from 'react-bootstrap';
 
 class ExportList extends Component {
   constructor(props) {
@@ -12,7 +12,6 @@ class ExportList extends Component {
   }
 
   activateGraph(activeGraph, e) {
-    console.log(e)
     e.preventDefault();
     e.stopPropagation();
     this.setState({
@@ -61,7 +60,7 @@ class ExportList extends Component {
           lastDKPValue = exportTableRow.dkp
           exportTableData.push(exportTableRow)
           // Populate match info & options
-          matchInfo = <div><h3>{this.state.searchTerm}</h3><Button onClick={() => this.props.addGraphMember(this.state.searchTerm)}>Add to Graph</Button></div>;
+          matchInfo = <div><h3>{this.state.searchTerm}</h3><Button bsStyle="primary" onClick={() => this.props.addGraphMember(this.state.searchTerm)}>Add to Graph</Button></div>;
         }
       })
 
@@ -81,8 +80,12 @@ class ExportList extends Component {
       }
     }
 
-    const tooltip = (
-      <Tooltip id="tooltip"><strong>Holy guacamole!</strong> Check this info.</Tooltip>
+    // Tooltip information for Overlays
+    const totalsTooltip = (
+      <Tooltip id="tooltip"><strong>Totals</strong> This graph shows the total dkp of added players on each date</Tooltip>
+    );
+    const changeTooltip = (
+      <Tooltip id="tooltip"><strong>Change</strong> This graph shows changes to added players dkp on each date</Tooltip>
     );
 
     return (
@@ -93,24 +96,28 @@ class ExportList extends Component {
 
         <Row>
           <Col xs={12} md={3}>
-            <input type="text"
-             id="searchbar"
-             placeholder="Search for player"
-             value={this.state.searchTerm}
-             onChange={this.searchFilter.bind(this)} />
-             {matchInfo}
+            <Panel header={<h4>Start with a search...</h4>} bsStyle="primary">
+              <input type="text"
+               id="searchbar"
+               placeholder="Search for player"
+               value={this.state.searchTerm}
+               onChange={this.searchFilter.bind(this)} />
+               {matchInfo}
+            </Panel>
+            <AppInformationPanel />
+
            </Col>
            <Col xs={12} md={9}>
 
              <ButtonGroup justified>
                <ButtonGroup>
-                 <OverlayTrigger placement="top" overlay={tooltip}>
-                   <Button bsStyle="default" onClick={() => this.props.selectGraphType("totalDkp")}><p>Totals</p></Button>
+                 <OverlayTrigger placement="top" overlay={totalsTooltip}>
+                   <Button bsStyle="info" onClick={() => this.props.selectGraphType("totalDkp")}>Totals</Button>
                  </OverlayTrigger>
                </ButtonGroup>
                <ButtonGroup>
-                 <OverlayTrigger placement="top" overlay={tooltip}>
-                  <Button bsStyle="default" onClick={() => this.props.selectGraphType("changeDkp")}><p>Changes</p></Button>
+                 <OverlayTrigger placement="top" overlay={changeTooltip}>
+                  <Button bsStyle="info" onClick={() => this.props.selectGraphType("changeDkp")}>Changes</Button>
                  </OverlayTrigger>
                </ButtonGroup>
              </ButtonGroup>

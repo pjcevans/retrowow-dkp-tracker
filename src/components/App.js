@@ -10,6 +10,7 @@ import ExportForm from './ExportForm';
 import style from './style';
 import { connect } from 'react-redux';
 import { exportsGetData, exportsPostData, uploadsClearErrored, uploadsHasErrored, uploadsClearSucceeded, uploadsHasSucceeded, addGraphMember, selectGraphType } from '../actions/exports';
+import createBrowserHistory from 'history/createBrowserHistory'
 
 class App extends Component {
 
@@ -17,12 +18,14 @@ class App extends Component {
     this.props.getExports('https://vgdkp.herokuapp.com/api/exports');
   }
 
+  const history = createBrowserHistory()
+
   render() {
 
 
 
     return (
-      <Router>
+      <Router history={history}>
         <div>
 
           <MainNav />

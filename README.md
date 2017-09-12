@@ -7,7 +7,7 @@ Requested by retro-gaming community for tracking their DKP Values
 ## How
 Node API & Axios used for communicating with a MongoDB collection hosted on mlab
 
-Install dependencies, run `npm run start-dev` - starts local server & bundles front end app
+Install dependencies, run `npm start` - starts local server & loads front end app on the fly
 
 # Create React App docs
 

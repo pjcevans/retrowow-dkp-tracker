@@ -1,6 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Route,
   Link
 } from 'react-router-dom'
@@ -18,14 +18,14 @@ class App extends Component {
     this.props.getExports('https://vgdkp.herokuapp.com/api/exports');
   }
 
-  const history = createBrowserHistory()
+  // const history = createBrowserHistory()
 
   render() {
 
 
 
     return (
-      <Router history={history}>
+      <Router>
         <div>
 
           <MainNav />

@@ -23,6 +23,9 @@ const MainNav = (props) => {
         <LinkContainer to="/dp">
           <NavItem eventKey={3}>De Profundis</NavItem>
         </LinkContainer>
+        <LinkContainer to="/ev">
+          <NavItem eventKey={3}>Everest</NavItem>
+        </LinkContainer>
       </Nav>
     </Navbar.Collapse>
   </Navbar>

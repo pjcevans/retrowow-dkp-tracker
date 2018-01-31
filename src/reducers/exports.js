@@ -55,6 +55,9 @@ export function exports(state = {}, action) {
       data.dp = action.exports.filter((currentExport) => {
         return currentExport.guild === "De Profundis";
       })
+      data.dp = action.exports.filter((currentExport) => {
+        return currentExport.guild === "Everest";
+      })
       return data;
 
     default:

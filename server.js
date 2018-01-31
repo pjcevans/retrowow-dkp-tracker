@@ -66,6 +66,7 @@ app.post('/api/exports', function(req, res, next) {
   //body parser lets us use the req.body
   if (req.body.password === process.env.VG_DKP_CE && req.body.guild === "Certus Excessum" ||
       req.body.password === process.env.VG_DKP_GGC && req.body.guild === "Goldshire Golfclub" ||
+      req.body.password === process.env.VG_DKP_EV && req.body.guild === "Everest" ||
       req.body.password === process.env.VG_DKP_DP && req.body.guild === "De Profundis"  ) {
     Export.findOneAndUpdate(
       { date: req.body.date },

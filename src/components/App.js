@@ -43,6 +43,9 @@ class App extends Component {
           <Route exact path="/dp" render={(props) => (<ExportList data={ this.props.exports.dp }
                                                                 addGraphMember= {this.props.addGraphMember}
                                                                 selectGraphType={this.props.selectGraphType}/>)} />
+          <Route exact path="/ev" render={(props) => (<ExportList data={ this.props.exports.ev }
+                                                                addGraphMember= {this.props.addGraphMember}
+                                                                selectGraphType={this.props.selectGraphType}/>)} />
           <Route path="/upload" render={(props) => (<ExportForm onExportSubmit={ this.props.postExport }
                                                                 uploadsClearErrored={ this.props.uploadsClearErrored }
                                                                 uploadsThrowErrored={ this.props.uploadsThrowErrored }
